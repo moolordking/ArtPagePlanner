@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PagePlanner</title>
+	<style>
+		body {
+			background-color: #212121;
+		}
+		#Book {
+			width: 55vw;
+			height: 75vh;
+			background-color: white;
+			border-radius: 5px;
+			margin-top: 17vh;
+		}
+		#Colours {
+			width: 15vw;
+			height: 10vh;
+			background-color: white;
+			border-radius: 5px;
+			float: right;
+			margin-top: -12.5vh;
+			margin-right: 22vw;
+		}
+		#Squares {
+			width: 39vw;
+			height: 10vh;
+			background-color: white;
+			border-radius: 5px;
+			float: right;
+			margin-top: -12.5vh;
+			margin-right: 38vw;
+		}
+		#Rectangles {
+			width: 19vw;
+			height: 10vh;
+			background-color: white;
+			border-radius: 5px;
+			float: right;
+			margin-top: -12.5vh;
+			margin-right: 58vw;
+		}
+		.ColCircle {
+			width: 6vh;
+			height: 6vh;
+			background-color: transparent;
+			margin: 0.5vw;
+			display: inline-block;
+		}
+		.ColourPicker {
+			border: none;
+			position: absolute;
+			width: 7vh;
+			height: 7vh;
+			transform: translate(-3.75vh, 0.25vh);
+			border-radius: 100vw;
+		}
+		input[type="color"] {
+			-webkit-appearance: none;
+			border: none;
+		}
+		input[type="color"]::-webkit-color-swatch-wrapper {
+			padding: 0;
+		}
+		input[type="color"]::-webkit-color-swatch {
+			border: none;
+		}
+		.slider {
+		  -webkit-appearance: none;
+		  width: 90%;
+		  height: 2vh;
+		  margin-top: 4vh;
+		  background: #d3d3d3;
+		  outline: none;
+		  border-radius: 100px;
+		}
+		.slider::-webkit-slider-thumb {
+		  -webkit-appearance: none;
+		  appearance: none;
+		  width: 5vh;
+		  height: 5vh;
+		  background: gray;
+		  cursor: pointer;
+		  border-radius: 100px;
+		}
+		.slider::-moz-range-thumb {
+		  width: 25px;
+		  height: 25px;
+		  background: #4CAF50;
+		  cursor: pointer;
+		  border-radius: 100px;
+		}
+
+		.S {
+			width: 20vh;
+			height: 20vh;
+			background-color: rgba(0,0,0,0.15);
+			position: absolute;
+			/*box-shadow: 0px 0px 10px rgba(0,0,0,0.8);*/
+			box-shadow: 15px 15px 0px -5px rgba(0,0,0,0.2);
+		}
+		#Title {
+			width: 50vh;
+			height: 10vh;
+			background-color: rgba(0,0,0,0.15);
+			position: absolute;
+			margin-left: 2vw;
+			margin-top: 2vw;
+			font-family: sans-serif;
+			font-size: 4vw;
+			color: rgba(0,0,0,0.20);
+			/*box-shadow: 0px 00px 10px rgba(0,0,0,0.8);*/
+			box-shadow: 15px 15px 0px -5px rgba(0,0,0,0.2);
+		}
+	</style>
+</head>
+<body>
+<center>
+	<div id="Colours">
+		<div id="Col1" class="ColCircle"><input id="Picker1" type="color" class="ColourPicker" value="#d3d3d3"></div>
+		<div id="Col2" class="ColCircle"><input id="Picker2" type="color" class="ColourPicker" value="#d3d3d3"></div>
+		<div id="Col3" class="ColCircle"><input id="Picker3" type="color" class="ColourPicker" value="#d3d3d3"></div>
+	</div>
+	<div id="Squares">
+		<input id="SquaresInput" class="slider" type="range" min="0" max="5" value="0" onchange="ColorBack();">
+	</div>
+	<!-- <div id="Rectangles">
+		<input id="RectanglesInput" class="slider" type="range" min="1" max="3" value="0">
+	</div> -->
+	<div id="Book">
+		<div style="height: 75vh; width: 0.5vw; background-color: #212121; position: absolute; margin-left: 27.25vw"></div>
+		<div id="Title">Title</div>
+		<div id="S1" class="S"></div>
+		<div id="S2" class="S"></div>
+		<div id="S3" class="S"></div>
+		<div id="S4" class="S"></div>
+		<div id="S5" class="S"></div>
+		<div id="S6" class="S"></div>
+	</div>
+</center>
+
+<script>
+
+	document.getElementById("Picker1").value = localStorage.getItem("C1");
+	document.getElementById("Picker2").value = localStorage.getItem("C2");
+	document.getElementById("Picker3").value = localStorage.getItem("C3");
+
+
+	setInterval(function() {
+
+		if (document.getElementById("Picker1").value == '#000000' && document.getElementById("Picker2").value == '#000000' && document.getElementById("Picker3").value == '#000000') {
+			document.getElementById("Picker1").value = '#d3d3d3';
+			document.getElementById("Picker2").value = '#d3d3d3';
+			document.getElementById("Picker3").value = '#d3d3d3';
+		}
+		localStorage.setItem("C1", document.getElementById("Picker1").value);
+		localStorage.setItem("C2", document.getElementById("Picker2").value);
+		localStorage.setItem("C3", document.getElementById("Picker3").value);
+
+		if (document.getElementById("SquaresInput").value < 1) {
+			document.getElementById("Title").style.display = "none";
+		} else {
+			document.getElementById("Title").style.display = "block";
+		}
+
+		if (document.getElementById("SquaresInput").value == 0) {
+			document.getElementById("Title").style.left = "22.5vw";
+			
+			document.getElementById("S1").style.display="none";
+			document.getElementById("S2").style.display="none";
+			document.getElementById("S3").style.display="none";
+			document.getElementById("S4").style.display="none";
+			document.getElementById("S5").style.display="none";
+			document.getElementById("S6").style.display="none";
+		}
+		if (document.getElementById("SquaresInput").value == 1) {
+			document.getElementById("Title").style.left = "22.5vw";
+			document.getElementById("S1").style.display="block";
+			document.getElementById("S1").style.width = "50vh";
+			document.getElementById("S1").style.height = "67vh";
+			document.getElementById("S1").style.top = "10vw";
+			document.getElementById("S1").style.left = "52vw";
+
+			document.getElementById("S2").style.display="block";
+			document.getElementById("S2").style.width = "50vh";
+			document.getElementById("S2").style.height = "54vh";
+			document.getElementById("S2").style.top = "16vw";
+			document.getElementById("S2").style.left = "24.5vw";
+
+			document.getElementById("S3").style.display="none";
+			document.getElementById("S4").style.display="none";
+			document.getElementById("S5").style.display="none";
+			document.getElementById("S6").style.display="none";
+		}
+		if (document.getElementById("SquaresInput").value == 2) {
+			document.getElementById("Title").style.left = "50vw";
+
+			document.getElementById("S1").style.display="block";
+			document.getElementById("S1").style.width = "30vh";
+			document.getElementById("S1").style.height = "30vh";
+			document.getElementById("S1").style.top = "10vw";
+			document.getElementById("S1").style.left = "24.5vw";
+
+			document.getElementById("S2").style.display="block";
+			document.getElementById("S2").style.width = "50vh";
+			document.getElementById("S2").style.height = "54vh";
+			document.getElementById("S2").style.top = "16vw";
+			document.getElementById("S2").style.left = "52vw";
+
+			document.getElementById("S3").style.display="block";
+			document.getElementById("S3").style.width = "30vh";
+			document.getElementById("S3").style.height = "30vh";
+			document.getElementById("S3").style.top = "27vw";
+			document.getElementById("S3").style.left = "33.5vw";
+
+			document.getElementById("S4").style.display="none";
+			document.getElementById("S5").style.display="none";
+			document.getElementById("S6").style.display="none";
+		}
+		if (document.getElementById("SquaresInput").value == 3) {
+			document.getElementById("Title").style.left = "22.5vw";
+
+			document.getElementById("S1").style.display="block";
+			document.getElementById("S1").style.width = "50vh";
+			document.getElementById("S1").style.height = "30vh";
+			document.getElementById("S1").style.top = "10vw";
+			document.getElementById("S1").style.left = "52vw";
+
+			document.getElementById("S2").style.display="block";
+			document.getElementById("S2").style.width = "25vh";
+			document.getElementById("S2").style.height = "25vh";
+			document.getElementById("S2").style.top = "16vw";
+			document.getElementById("S2").style.left = "36vw";
+
+			document.getElementById("S3").style.display="block";
+			document.getElementById("S3").style.width = "50vh";
+			document.getElementById("S3").style.height = "30vh";
+			document.getElementById("S3").style.top = "27vw";
+			document.getElementById("S3").style.left = "52vw";
+
+			document.getElementById("S4").style.display="block";
+			document.getElementById("S4").style.width = "25vh";
+			document.getElementById("S4").style.height = "25vh";
+			document.getElementById("S4").style.top = "29.5vw";
+			document.getElementById("S4").style.left = "24.5vw";		
+
+			document.getElementById("S5").style.display="none";
+			document.getElementById("S6").style.display="none";
+		}
+		if (document.getElementById("SquaresInput").value == 4) {
+			document.getElementById("Title").style.left = "22.5vw";
+
+			document.getElementById("S1").style.display="block";
+			document.getElementById("S1").style.width = "50vh";
+			document.getElementById("S1").style.height = "22vh";
+			document.getElementById("S1").style.top = "17vw";
+			document.getElementById("S1").style.left = "24.5vw";
+
+			document.getElementById("S2").style.display="block";
+			document.getElementById("S2").style.width = "25vh";
+			document.getElementById("S2").style.height = "30vh";
+			document.getElementById("S2").style.top = "10vw";
+			document.getElementById("S2").style.left = "63.5vw";
+
+			document.getElementById("S3").style.display="block";
+			document.getElementById("S3").style.width = "50vh";
+			document.getElementById("S3").style.height = "22vh";
+			document.getElementById("S3").style.top = "30vw";
+			document.getElementById("S3").style.left = "24.5vw";
+
+			document.getElementById("S4").style.display="block";
+			document.getElementById("S4").style.width = "25vh";
+			document.getElementById("S4").style.height = "30vh";
+			document.getElementById("S4").style.top = "26.5vw";
+			document.getElementById("S4").style.left = "63.5vw";
+
+			document.getElementById("S5").style.display="block";
+			document.getElementById("S5").style.width = "20.5vh";
+			document.getElementById("S5").style.height = "65vh";
+			document.getElementById("S5").style.top = "10vw";
+			document.getElementById("S5").style.left = "52vw";
+
+			document.getElementById("S6").style.display="none";
+		}
+		if (document.getElementById("SquaresInput").value == 5) {
+			document.getElementById("Title").style.left = "50vw";
+
+			document.getElementById("S1").style.display="block";
+			document.getElementById("S1").style.width = "22vh";
+			document.getElementById("S1").style.height = "22vh";
+			document.getElementById("S1").style.top = "17vw";
+			document.getElementById("S1").style.left = "52vw";
+
+			document.getElementById("S2").style.display="block";
+			document.getElementById("S2").style.width = "25vh";
+			document.getElementById("S2").style.height = "30vh";
+			document.getElementById("S2").style.top = "10vw";
+			document.getElementById("S2").style.left = "24.5vw";
+
+			document.getElementById("S3").style.display="block";
+			document.getElementById("S3").style.width = "50vh";
+			document.getElementById("S3").style.height = "22vh";
+			document.getElementById("S3").style.top = "30vw";
+			document.getElementById("S3").style.left = "52vw";
+
+			document.getElementById("S4").style.display="block";
+			document.getElementById("S4").style.width = "25vh";
+			document.getElementById("S4").style.height = "30vh";
+			document.getElementById("S4").style.top = "26.5vw";
+			document.getElementById("S4").style.left = "24.5vw";
+
+			document.getElementById("S5").style.display="block";
+			document.getElementById("S5").style.width = "20.5vh";
+			document.getElementById("S5").style.height = "65vh";
+			document.getElementById("S5").style.top = "10vw";
+			document.getElementById("S5").style.left = "38vw";
+
+			document.getElementById("S6").style.display="block";
+			document.getElementById("S6").style.width = "22vh";
+			document.getElementById("S6").style.height = "22vh";
+			document.getElementById("S6").style.top = "17vw";
+			document.getElementById("S6").style.left = "65vw";
+		}
+	}, 1/3);
+
+	function ColorBack() {
+		var colorVal = Math.floor((Math.random() * 3) + 1);
+
+		if (document.getElementById("Picker" + colorVal).value != '#d3d3d3') {
+			document.getElementById("Book").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+
+			if (colorVal == 1) {
+				colorVal = Math.floor((Math.random() * 3) + 2);
+			} else if (colorVal == 2) {
+				if (Math.floor((Math.random() * 2) + 1) == 1) {
+					colorVal = 1;
+				} else {
+					colorVal = 3;
+				}
+			} else {
+				colorVal = Math.floor((Math.random() * 2) + 1);
+			}
+
+			document.getElementById("Title").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+			document.getElementById("S1").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+			document.getElementById("S2").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+			document.getElementById("S3").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+			document.getElementById("S4").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+			document.getElementById("S5").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+			document.getElementById("S6").style.backgroundColor = document.getElementById("Picker" + colorVal).value;
+		}
+	}
+</script>
+</body>
+</html>
